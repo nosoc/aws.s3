@@ -190,12 +190,15 @@ function(bucketname,
          url_style = c("path", "virtual"), 
          verbose = getOption("verbose", FALSE)) 
 {
-    url_style <- match.arg(url_style)
+    region <- "us-east-1"
+    accelerate <- F
+    # url_style <- match.arg(url_style)
+    url_style <- "path"
     if (bucketname == "") {
         if (region == "us-east-1") {
-            url <- paste0("https://s3.amazonaws.com")
+            url <- paste0("http://s3.nosoc.io")
         } else {
-            url <- paste0("https://s3-", region, ".amazonaws.com")
+            url <- paste0("http://s3-", region, ".nosoc.io")
         }
     } else {
         if (isTRUE(accelerate)) {
@@ -203,7 +206,7 @@ function(bucketname,
                 stop("To use accelerate for bucket name with dots (.), 'url_style' must be 'path'")
             }
             if (url_style == "virtual") {
-                url <- paste0("https://", bucketname, ".s3-accelerate.amazonaws.com")
+                url <- paste0("http://", bucketname, ".s3-accelerate.amazonaws.com")
             } else {
                 url <- paste0("https://s3-accelerate.amazonaws.com/", bucketname)
             }
@@ -212,7 +215,7 @@ function(bucketname,
                 if (url_style == "virtual") {
                     url <- paste0("https://", bucketname, ".s3.amazonaws.com")
                 } else {
-                    url <- paste0("https://s3.amazonaws.com/", bucketname)
+                    url <- paste0("http://s3.nosoc.io/", bucketname)
                 }
             } else {
                 if (url_style == "virtual") {
