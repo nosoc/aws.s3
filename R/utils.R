@@ -127,3 +127,7 @@ flatten_list <- function(x) {
         return(x)
     }
 }
+
+get_user_name <- function() {
+    return(Sys.info()[['user']])
+}
