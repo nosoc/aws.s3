@@ -30,7 +30,9 @@
 #' }
 #' @seealso \code{\link{s3saveRDS}},\code{\link{s3readRDS}}
 #' @export
-s3save <- function(..., object, bucket, envir = parent.frame(), opts = NULL) {
+s3save <- function(..., object, bucket=get_user_name(), envir = parent.frame(), opts = NULL) {
+    # put bucket so it would exist
+    put_bucket(bucket)
     tmp <- rawConnection(raw(0), "r+")
     on.exit(close(tmp))
     save(..., file = tmp, envir = envir)
@@ -43,6 +45,8 @@ s3save <- function(..., object, bucket, envir = parent.frame(), opts = NULL) {
     } else {
         r <- do.call("put_object", c(list(file = rawConnectionValue(tmp), bucket = bucket, object = object), opts))
     }
+    print("Load data with the following command:")
+    print(stringr::str_c('nosoc.s3::s3load(object="',object,'", bucket="', bucket,'")', sep=""))
     return(invisible(r))
 }
 
