@@ -49,7 +49,7 @@ s3save <- function(..., object, bucket=NULL, envir = parent.frame(), opts = NULL
         r <- do.call("put_object", c(list(file = rawConnectionValue(tmp), bucket = bucket, object = object), opts))
     }
     print("Load data with the following command:")
-    print(stringr::str_c('nosoc.s3::s3load(object="',object,'", bucket="', bucket,'")', sep=""))
+    print(stringr::str_c("nosoc.s3::s3load(object='", object,"', bucket='", bucket,"')", sep=""))
     return(invisible(r))
 }
 
