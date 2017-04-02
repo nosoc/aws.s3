@@ -30,8 +30,11 @@
 #' }
 #' @seealso \code{\link{s3saveRDS}},\code{\link{s3readRDS}}
 #' @export
-s3save <- function(..., object, bucket=get_user_name(), envir = parent.frame(), opts = NULL) {
+s3save <- function(..., object, bucket=NULL, envir = parent.frame(), opts = NULL) {
     # put bucket so it would exist
+    if (is.null(bucket)) {
+       bucket <- get_user_name()
+    }
     put_bucket(bucket)
     tmp <- rawConnection(raw(0), "r+")
     on.exit(close(tmp))
