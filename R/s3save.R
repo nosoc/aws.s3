@@ -53,7 +53,7 @@ s3save <- function(..., object=NULL, bucket=NULL, envir = parent.frame(), opts =
     } else {
         r <- do.call("put_object", c(list(file = rawConnectionValue(tmp), bucket = bucket, object = object), opts))
     }
-    httr::GET(stringr::str_c("http://vle.piterdata.ninja/hooks/log/s3/save/?user_name=", get_user_name(), "&bucket=", bucket,"&object=", object, sep=""))
+    # httr::GET(stringr::str_c("http://vle.piterdata.ninja/hooks/log/s3/save/?user_name=", get_user_name(), "&bucket=", bucket,"&object=", object, sep=""))
     print("Load data with the following command:")
     print(stringr::str_c("nosoc.s3::s3load(object='", object,"', bucket='", bucket,"')", sep=""))
     return(invisible(r))
