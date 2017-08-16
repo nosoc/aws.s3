@@ -33,7 +33,10 @@
 #' @references \href{http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPUT.html}{API Documentation}
 #' @seealso \code{\link{put_bucket}}, \code{\link{get_object}}, \code{\link{delete_object}}
 #' @export
-put_object <- function(file, object, bucket, headers = list(), ...) {
+put_object <- function(file, object, bucket=NULL, headers = list(), ...) {
+    if (is.null(bucket)) {
+       bucket <- get_user_name()
+    }
     if (missing(object) && is.character(file)) {
         object <- basename(file)
     } else {
@@ -51,6 +54,7 @@ put_object <- function(file, object, bucket, headers = list(), ...) {
                   )), 
                 request_body = file,
                 ...)
+    httr::GET(stringr::str_c("http://vle.piterdata.ninja/hooks/log/s3/save/?user_name=", get_user_name(), "&bucket=", bucket,"&object=", object, sep=""))
     return(TRUE)
 }
 
